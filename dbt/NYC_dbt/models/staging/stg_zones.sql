@@ -7,6 +7,10 @@ select cast(objectid as double) as objectid,
  borough
  from 
  taxi_nyc_database.nadim_schema.taxi_zones
- -- drop the rows whene length is less than 3 and bigger than 16
+ -- drop the rows where length is less than 3 and bigger than 16
  where 
- length(objectid) < 3 and length(shape_leng) <16
+ length(objectid) < 3 and length(shape_leng) <16 and
+ shape_area is not NULL and
+ zone is not NULL and
+ locationid is not NULL and
+ borough is not NULL
