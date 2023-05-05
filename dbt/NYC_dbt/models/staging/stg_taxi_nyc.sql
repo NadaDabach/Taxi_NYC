@@ -18,8 +18,7 @@ tipamount,
 tollsamount,
 totalamount,
 triptype
-FROM 
-taxi_nyc_database.nadim_schema.taxi_vert_nyc
+FROM {{ source('taxi_source', 'taxi_vert_nyc') }}
 
 
 

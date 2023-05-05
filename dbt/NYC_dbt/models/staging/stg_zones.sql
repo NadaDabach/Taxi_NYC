@@ -5,8 +5,7 @@ select cast(objectid as double) as objectid,
  zone, 
  cast(locationid as double) as locationid, 
  borough
- from 
- taxi_nyc_database.nadim_schema.taxi_zones
+ from {{ source('taxi_source', 'taxi_zones') }}
  -- drop the rows where length is less than 3 and bigger than 16
  where 
  length(objectid) < 3 and length(shape_leng) <16 and
