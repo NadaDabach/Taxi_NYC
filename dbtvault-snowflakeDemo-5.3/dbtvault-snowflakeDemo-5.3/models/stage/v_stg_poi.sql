@@ -1,21 +1,35 @@
 {%- set yaml_metadata -%}
-source_model: 'raw_zones'
-derived_columns: 
-  ZONES_KEY: OBJECTID
-  THE_GEOM: THE_GEOM
+source_model: 'raw_pointOfInterest'
+derived_columns:
+  POI_KEY: PLACEID
+  POI_GEOM: POI_GEOM
   RECORD_SOURCE: '!NYC-TAXI'
   LOAD_DATE: DATEADD(DAY,30, LOAD_DATE)
   EFFECTIVE_FROM : LOAD_DATE
 hashed_columns:
-  ZONES_PK: OBJECTID
-  ZONES_HASHDIFF:
+  POI_PK: PLACEID
+  ZONE_PK: OBJECTID
+  POI_ZONES_PK:
+    - PLACEID
+    - OBJECTID
+  POI_HASHDIFF:
     is_hashdiff: true
     columns:
-      - OBJECTID
-      - SHAPE_LENG
-      - SHAPE_AREA
-      - ZONE
+      - PLACEID
+      - SEGMENTID
+      - COMPLEXID
+      - SAFTYPE
+      - SOS
+      - FACI_DOM
+      - BIN
       - BOROUGH
+      - CREATED
+      - MODIFIED
+      - FACILITY_T
+      - SOURCE
+      - B7SC
+      - PRI_ADD
+      - NAME
       - EFFECTIVE_FROM
 {%- endset -%}
 

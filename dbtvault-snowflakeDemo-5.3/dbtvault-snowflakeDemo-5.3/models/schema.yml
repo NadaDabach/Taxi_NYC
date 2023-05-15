@@ -24,4 +24,3 @@ models:
       - name: placeid
         tests:
           - unique
-
