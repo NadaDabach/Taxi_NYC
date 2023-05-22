@@ -1,8 +1,0 @@
-version: 2
-
-models:
-  - name: stg_taxi_nyc
-    columns:
-      - name: id
-        tests:
-          - unique
