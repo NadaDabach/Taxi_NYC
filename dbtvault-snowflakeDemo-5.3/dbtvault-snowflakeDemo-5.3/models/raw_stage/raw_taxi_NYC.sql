@@ -1,5 +1,6 @@
 SELECT 
 ROW_NUMBER() OVER (ORDER BY (SELECT NULL)) AS ID,
+id as actual_id,
 vendorid,
 lpeppickupdatetime,
 lpepdropoffdatetime,
