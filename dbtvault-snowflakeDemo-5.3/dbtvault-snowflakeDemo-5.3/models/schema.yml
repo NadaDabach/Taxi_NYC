@@ -259,3 +259,108 @@ models:
         tests:
           - unique
           - not_null
+  - name : link_payment_taxi
+    description: "This is the link between payment and taxi populated from v_stg_payment"
+  - name : link_tarification_taxi
+    description: "This is the link between tarification and taxi populated from v_stg_tarification"
+  - name : link_vendor_taxi
+    description: "This is the link between vendor and taxi populated from v_stg_vendor"
+  - name : link_trip_taxi
+    description: "This is the link between trip and taxi populated from v_stg_trip"
+  - name : link_stockandtransmission_taxi
+    description: "This is the link between stockandtransmission and taxi populated from v_stg_stockandtransmission"
+  - name : link_poi_zones
+    description: "This is the link between point of interest and zones populated from v_stg_pointOfInterest"
+  - name : link_taxi_zones_do
+    description: "This is the link between zones and taxi populated from v_stg_taxi for the drop off location"
+  - name : link_taxi_zones_pu
+    description: "This is the link between zones and taxi populated from v_stg_taxi for the pick up location"
+  - name: sat_payment
+    description: "This is the satelite for the payment populated from v_stg_payment"
+    columns:
+      - name: PAYMENT_DESCRIPTION
+        tests:
+          - not_null
+  - name: sat_tarification
+    description: "This is the satelite for the tarification populated from v_stg_tarification"
+    columns:
+      - name: TARIFICATION_DESCRIPTION
+        tests:
+          - not_null
+  - name: sat_vendor
+    description: "This is the satelite for the vendor populated from v_stg_vendor"
+    columns:
+      - name: VENDOR_DESCRIPTION
+        tests:
+          - not_null
+  - name: sat_trip
+    description: "This is the satelite for the trip populated from v_stg_trip"
+    columns:
+      - name: TRIP_DESCRIPTION
+        tests:
+          - not_null
+  - name: sat_stockandtransmission
+    description: "This is the satelite for the stockandtransmission populated from v_stg_stockandtransmission"
+    columns:
+      - name: S_DESCRIPTION
+        tests:
+          - not_null
+  - name: sat_poi
+    description: "This is the satelite for the point of interest populated from v_stg_pointOfInterest"
+  - name: sat_zones
+    description: "This is the satelite for the zones populated from v_stg_zones"
+    columns:
+      - name: SHAPE_LENG
+        tests:
+          - not_null
+      - name: SHAPE_AREA
+        tests:
+          - not_null
+      - name: the_geom
+        tests:
+          - not_null 
+      - name: zone
+        tests:
+          - not_null
+      - name: borough
+        tests:
+          - not_null
+  - name: sat_taxi
+    description: "This is the satelite for the taxi populated from v_stg_taxi"
+    columns:
+      - name: LPEPPICKUPDATETIME
+        tests:
+          - not_null
+      - name: LPEPDROPOFFDATETIME
+        tests:
+          - not_null
+      - name: PASSENGERCOUNT
+        tests:
+          - not_null
+      - name: TRIPDISTANCE
+        tests:
+          - not_null
+      - name: STOREANDFWDFLAG
+        tests:
+          - not_null
+      - name: FAREAMOUNT
+        tests:
+          - not_null
+      - name: EXTRA
+        tests:
+          - not_null
+      - name: MTATAX
+        tests:
+          - not_null
+      - name: IMPROVEMENTSURCHARGE
+        tests:
+          - not_null
+      - name: TIPAMOUNT
+        tests:
+          - not_null
+      - name: TOLLSAMOUNT
+        tests:
+          - not_null
+      - name: TOTALAMOUNT
+        tests:
+          - not_null
