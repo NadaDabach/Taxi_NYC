@@ -7,12 +7,19 @@ sources:
     schema: nadim_schema  
     tables:
       - name: payment
+        description: "This is the payment table from the taxi_nyc database"
       - name: point_of_interest
+        description: "This is the point of interest table from the taxi_nyc database"
       - name: tarification
+        description: "This is the tarification table from the taxi_nyc database"
       - name: taxi_vert_nyc
+        description: "This is the taxi table from the taxi_nyc database"
       - name: vendor
+        description: "This is the vendor table from the taxi_nyc database"
       - name: trip
+        description: "This is the trip table from the taxi_nyc database"
       - name: stockandtransmission
+        description: "This is the stockandtransmission table from the taxi_nyc database"
   
   - name: taxi_source_transformed
     description: "This is the source for the taxi data used to clean the data from the taxi_nyc database and transform it to the raw stage"
@@ -20,6 +27,7 @@ sources:
     schema: nadim_transf
     tables:
       - name: zones
+        description: "This is the zones table after cleaning and transforming the data from the taxi_nyc database"
 
 models:
   - name: raw_pointOfInterest
@@ -281,30 +289,40 @@ models:
       - name: PAYMENT_DESCRIPTION
         tests:
           - not_null
+          - accepted_values:
+              values: ['Carte de crédit', 'Argent liquide', 'Aucuns frais', 'Litige', 'Inconnu', 'Voyage annulé']
   - name: sat_tarification
     description: "This is the satelite for the tarification populated from v_stg_tarification"
     columns:
       - name: TARIFICATION_DESCRIPTION
         tests:
           - not_null
+          - accepted_values:
+              values: ['Taux standard', 'JFK', 'Newark', 'Nassau ou Westchester', 'Prix négocié', 'Voyage en groupe']
   - name: sat_vendor
     description: "This is the satelite for the vendor populated from v_stg_vendor"
     columns:
       - name: VENDOR_DESCRIPTION
         tests:
           - not_null
+          - accepted_values:
+              values: ['Creative Mobile Technologies, LLC', 'VeriFone Inc']
   - name: sat_trip
     description: "This is the satelite for the trip populated from v_stg_trip"
     columns:
       - name: TRIP_DESCRIPTION
         tests:
           - not_null
+          - accepted_values:
+              values: ['Héler en rue', 'Envoyer']
   - name: sat_stockandtransmission
     description: "This is the satelite for the stockandtransmission populated from v_stg_stockandtransmission"
     columns:
       - name: S_DESCRIPTION
         tests:
           - not_null
+          - accepted_values:
+              values: ['Trajet stockage et transmission', 'Pas un trajet stockage et transmission']
   - name: sat_poi
     description: "This is the satelite for the point of interest populated from v_stg_pointOfInterest"
   - name: sat_zones
@@ -325,6 +343,8 @@ models:
       - name: borough
         tests:
           - not_null
+          - accepted_values:
+              values: ['Manhattan', 'Bronx', 'Brooklyn', 'Queens', 'Staten Island', 'EWR']
   - name: sat_taxi
     description: "This is the satelite for the taxi populated from v_stg_taxi"
     columns:
