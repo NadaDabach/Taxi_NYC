@@ -1,0 +1,388 @@
+version: 2
+
+sources:
+  - name: taxi_source
+    description: "This is the source for the taxi data from the taxi_nyc database"
+    database: taxi_nyc_database  
+    schema: nadim_schema  
+    tables:
+      - name: payment
+        description: "This is the payment table from the taxi_nyc database"
+      - name: point_of_interest
+        description: "This is the point of interest table from the taxi_nyc database"
+      - name: tarification
+        description: "This is the tarification table from the taxi_nyc database"
+      - name: taxi_vert_nyc
+        description: "This is the taxi table from the taxi_nyc database"
+      - name: vendor
+        description: "This is the vendor table from the taxi_nyc database"
+      - name: trip
+        description: "This is the trip table from the taxi_nyc database"
+      - name: stockandtransmission
+        description: "This is the stockandtransmission table from the taxi_nyc database"
+      - name: taxi_zones 
+        description: "This is the zones table from the taxi_nyc database"
+  
+  - name: taxi_source_transformed
+    description: "This is the source for the taxi data used to clean the data from the taxi_nyc database and transform it to the raw stage"
+    database: taxi_nyc_database  
+    schema: nadim_transf
+    tables:
+      - name: zones
+        description: "This is the zones table after cleaning and transforming the data from the taxi_nyc database"
+
+models:
+  - name: raw_pointOfInterest
+    description: "This is the raw stage for the point of interest table materialized as view from taxi_source"
+    columns:
+      - name: placeid
+        tests:
+          - unique
+          - not_null
+  - name: raw_zones
+    description: "This is the raw stage for the zones materialized as view from taxi_source_transformed"
+    columns:
+      - name: objectid
+        tests:
+          - unique
+          - not_null
+  - name: raw_taxi_NYC
+    description: "This is the raw stage for the taxi materialized as view from taxi_source"
+    columns:
+      - name: ID
+        tests:
+          - unique
+          - not_null
+      - name: actual_id
+        tests:
+          - unique
+          - not_null
+  - name: raw_payment
+    description: "This is the raw stage for the payment materialized as view from taxi_source"
+    columns:
+    - name: paymenttype
+      tests:
+        - not_null
+  - name: raw_tarification
+    description: "This is the raw stage for the tarification materialized as view from taxi_source"
+    columns:
+    - name: ratecodeid
+      tests:
+        - not_null
+  - name: raw_vendor
+    description: "This is the raw stage for the vendor materialized as view from taxi_source"
+    columns:
+    - name: vendorID
+      tests:
+        - not_null
+  - name: raw_trip
+    description: "This is the raw stage for the trip materialized as view from taxi_source"
+    columns:
+    - name: triptype
+      tests:
+        - not_null
+  - name: raw_stockandtransmission
+    description: "This is the raw stage for the stockandtransmission materialized as view from taxi_source"
+    columns:
+    - name: storeandfwdflag
+      tests:
+        - not_null
+  - name: v_stg_payment
+    description: "This is the staging for the payment populated from raw_payment"
+    columns:
+      - name: PAYMENT_TAXI_PK
+        tests:
+          - unique
+      - name: TAXI_PK
+        tests:
+          - unique
+      - name: PAYMENTTYPE_PK
+        tests:
+          - unique
+  - name: v_stg_tarification
+    description: "This is the staging for the tarification populated from raw_tarification"
+    columns:
+      - name: TARIFICATION_TAXI_PK
+        tests:
+          - unique
+      - name: TAXI_PK
+        tests:
+          - unique
+      - name: TARIFICATIONCODE_PK
+        tests:
+          - unique
+  - name: v_stg_vendor
+    description: "This is the staging for the vendor populated from raw_vendor"
+    columns:
+      - name: VENDOR_TAXI_PK
+        tests:
+          - unique
+      - name: TAXI_PK
+        tests:
+          - unique
+      - name: VENDOR_PK
+        tests:
+          - unique
+  - name: v_stg_trip
+    description: "This is the staging for the trip populated from raw_trip"
+    columns:
+      - name: TRIP_TAXI_PK
+        tests:
+          - unique
+      - name: TAXI_PK
+        tests:
+          - unique
+      - name: TRIP_PK
+        tests:
+          - unique
+  - name: v_stg_stockandtransmission
+    description: "This is the staging for the stockandtransmission populated from raw_stockandtransmission"
+    columns:
+      - name: S_TAXI_PK
+        tests:
+          - unique
+      - name: TAXI_PK
+        tests:
+          - unique
+      - name: S_PK
+        tests:
+          - unique
+  - name: v_stg_poi
+    description: "This is the staging for the point of interest populated from raw_pointOfInterest"
+    columns:
+      - name: POI_ZONES_PK
+        tests:
+          - unique
+      - name: ZONE_PK
+        tests:
+          - unique
+      - name: POI_PK
+        tests:
+          - unique
+  - name: v_stg_zones
+    description: "This is the staging for the zones populated from raw_zones"
+    columns:
+      - name: ZONES_PK
+        tests:
+          - unique
+          - not_null
+  - name: v_stg_taxi
+    description: "This is the staging for the taxi populated from raw_taxi_NYC"
+    columns:
+      - name: TAXI_PK
+        tests:
+          - unique
+          - not_null
+      - name: PULOCATION_PK
+        tests:
+          - unique
+          - not_null
+      - name: DOLOCATION_PK
+        tests:
+          - unique
+          - not_null
+  - name : hub_taxi
+    description: "This is the hub for the taxi populated from v_stg_taxi"
+    columns:
+      - name: TAXI_PK
+        tests:
+          - unique
+          - not_null
+      - name : TAXI_KEY
+        tests:
+          - unique
+          - not_null
+  - name : hub_payment
+    description: "This is the hub for the payment populated from v_stg_payment"
+    columns:
+      - name: PAYMENTTYPE_PK
+        tests:
+          - unique
+          - not_null
+      - name : PAYMENT_KEY
+        tests:
+          - unique
+          - not_null
+  - name : hub_tarification
+    description: "This is the hub for the tarification populated from v_stg_tarification"
+    columns:
+      - name: TARIFICATIONCODE_PK
+        tests:
+          - unique
+          - not_null
+      - name : TARIFICATION_KEY
+        tests:
+          - unique
+          - not_null
+  - name : hub_vendor
+    description: "This is the hub for the vendor populated from v_stg_vendor"
+    columns:
+      - name: VENDOR_PK
+        tests:
+          - unique
+          - not_null
+      - name : VENDOR_KEY
+        tests:
+          - unique
+          - not_null
+  - name : hub_trip
+    description: "This is the hub for the trip populated from v_stg_trip"
+    columns:
+      - name: TRIP_PK
+        tests:
+          - unique
+          - not_null
+      - name : TRIP_KEY
+        tests:
+          - unique
+          - not_null
+  - name : hub_stockandtransmission
+    description: "This is the hub for the stockandtransmission populated from v_stg_stockandtransmission"
+    columns:
+      - name: S_PK
+        tests:
+          - unique
+          - not_null
+      - name : S_KEY
+        tests:
+          - unique
+          - not_null
+  - name : hub_poi
+    description: "This is the hub for the point of interest populated from v_stg_pointOfInterest"
+    columns:
+      - name: POI_PK
+        tests:
+          - unique
+          - not_null
+      - name : POI_KEY
+        tests:
+          - unique
+          - not_null
+  - name : hub_zones
+    description: "This is the hub for the zones populated from v_stg_zones"
+    columns:
+      - name: ZONES_PK
+        tests:
+          - unique
+          - not_null
+      - name : ZONES_KEY
+        tests:
+          - unique
+          - not_null
+  - name : link_payment_taxi
+    description: "This is the link between payment and taxi populated from v_stg_payment"
+  - name : link_tarification_taxi
+    description: "This is the link between tarification and taxi populated from v_stg_tarification"
+  - name : link_vendor_taxi
+    description: "This is the link between vendor and taxi populated from v_stg_vendor"
+  - name : link_trip_taxi
+    description: "This is the link between trip and taxi populated from v_stg_trip"
+  - name : link_stockandtransmission_taxi
+    description: "This is the link between stockandtransmission and taxi populated from v_stg_stockandtransmission"
+  - name : link_poi_zones
+    description: "This is the link between point of interest and zones populated from v_stg_pointOfInterest"
+  - name : link_taxi_zones_do
+    description: "This is the link between zones and taxi populated from v_stg_taxi for the drop off location"
+  - name : link_taxi_zones_pu
+    description: "This is the link between zones and taxi populated from v_stg_taxi for the pick up location"
+  - name: sat_payment
+    description: "This is the satelite for the payment populated from v_stg_payment"
+    columns:
+      - name: PAYMENT_DESCRIPTION
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['Carte de crédit', 'Argent liquide', 'Aucuns frais', 'Litige', 'Inconnu', 'Voyage annulé']
+  - name: sat_tarification
+    description: "This is the satelite for the tarification populated from v_stg_tarification"
+    columns:
+      - name: TARIFICATION_DESCRIPTION
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['Taux standard', 'JFK', 'Newark', 'Nassau ou Westchester', 'Prix négocié', 'Voyage en groupe']
+  - name: sat_vendor
+    description: "This is the satelite for the vendor populated from v_stg_vendor"
+    columns:
+      - name: VENDOR_DESCRIPTION
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['Creative Mobile Technologies, LLC', 'VeriFone Inc']
+  - name: sat_trip
+    description: "This is the satelite for the trip populated from v_stg_trip"
+    columns:
+      - name: TRIP_DESCRIPTION
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['Héler en rue', 'Envoyer']
+  - name: sat_stockandtransmission
+    description: "This is the satelite for the stockandtransmission populated from v_stg_stockandtransmission"
+    columns:
+      - name: S_DESCRIPTION
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['Trajet stockage et transmission', 'Pas un trajet stockage et transmission']
+  - name: sat_poi
+    description: "This is the satelite for the point of interest populated from v_stg_pointOfInterest"
+  - name: sat_zones
+    description: "This is the satelite for the zones populated from v_stg_zones"
+    columns:
+      - name: SHAPE_LENG
+        tests:
+          - not_null
+      - name: SHAPE_AREA
+        tests:
+          - not_null
+      - name: the_geom
+        tests:
+          - not_null 
+      - name: zone
+        tests:
+          - not_null
+      - name: borough
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['Manhattan', 'Bronx', 'Brooklyn', 'Queens', 'Staten Island', 'EWR']
+  - name: sat_taxi
+    description: "This is the satelite for the taxi populated from v_stg_taxi"
+    columns:
+      - name: LPEPPICKUPDATETIME
+        tests:
+          - not_null
+      - name: LPEPDROPOFFDATETIME
+        tests:
+          - not_null
+      - name: PASSENGERCOUNT
+        tests:
+          - not_null
+      - name: TRIPDISTANCE
+        tests:
+          - not_null
+      - name: STOREANDFWDFLAG
+        tests:
+          - not_null
+      - name: FAREAMOUNT
+        tests:
+          - not_null
+      - name: EXTRA
+        tests:
+          - not_null
+      - name: MTATAX
+        tests:
+          - not_null
+      - name: IMPROVEMENTSURCHARGE
+        tests:
+          - not_null
+      - name: TIPAMOUNT
+        tests:
+          - not_null
+      - name: TOLLSAMOUNT
+        tests:
+          - not_null
+      - name: TOTALAMOUNT
+        tests:
+          - not_null

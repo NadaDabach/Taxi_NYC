@@ -1,0 +1,1 @@
+select * from {{ ref('link_poi_zones') }}
