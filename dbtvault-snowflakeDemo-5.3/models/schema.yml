@@ -386,3 +386,51 @@ models:
       - name: TOTALAMOUNT
         tests:
           - not_null
+  - name: hub_b_payment
+    description: "This is the hub for the payment in the business vault"
+  - name: hub_b_tarification
+    description: "This is the hub for the tarification in the business vault"
+  - name: hub_b_vendor
+    description: "This is the hub for the vendor in the business vault"
+  - name: hub_b_trip
+    description: "This is the hub for the trip in the business vault"
+  - name: hub_b_stockandtransmission
+    description: "This is the hub for the stockandtransmission in the business vault"
+  - name: hub_b_poi
+    description: "This is the hub for the point of interest in the business vault"
+  - name: hub_b_zones
+    description: "This is the hub for the zones in the business vault"
+  - name: hub_b_taxi
+    description: "This is the hub for the taxi in the business vault"
+  - name: link_b_payment_taxi
+    description: "This is the link between payment and taxi in the business vault"
+  - name: link_b_tarification_taxi
+    description: "This is the link between tarification and taxi in the business vault"
+  - name: link_b_vendor_taxi
+    description: "This is the link between vendor and taxi in the business vault"
+  - name: link_b_trip_taxi
+    description: "This is the link between trip and taxi in the business vault"
+  - name: link_b_stockandtransmission_taxi
+    description: "This is the link between stockandtransmission and taxi in the business vault"
+  - name: link_b_poi_zones
+    description: "This is the link between point of interest and zones in the business vault"
+  - name: link_b_taxi_zones_do
+    description: "This is the link between zones and taxi in the business vault for the drop off location"
+  - name: link_b_taxi_zones_pu
+    description: "This is the link between zones and taxi in the business vault for the pick up location"
+  - name: sat_b_payment
+    description: "This is the satelite for the payment in the business vault where business rules are applied"
+  - name: sat_b_tarification
+    description: "This is the satelite for the tarification in the business vault where business rules are applied"
+  - name: sat_b_vendor
+    description: "This is the satelite for the vendor in the business vault where business rules are applied"
+  - name: sat_b_trip
+    description: "This is the satelite for the trip in the business vault where business rules are applied"
+  - name: sat_b_stockandtransmission
+    description: "This is the satelite for the stockandtransmission in the business vault where business rules are applied"
+  - name: sat_b_poi
+    description: "This is the satelite for the point of interest in the business vault where business rules are applied"
+  - name: sat_b_zones
+    description: "This is the satelite for the zones in the business vault where business rules are applied"
+  - name: sat_b_taxi
+    description: "This is the satelite for the taxi in the business vault where business rules are applied"

@@ -1,0 +1,14 @@
+version: 2
+
+sources:
+  - name: BV_source
+    description: "This is the source for the data Marts from comming from the business vault"
+    database: taxi_nyc_analytics  
+    schema: dbtvault_nyc_schema  
+    tables:
+      - name: hub_b_payment
+        description: "This is the hub for the payment from the business vault"
+      - name: link_b_payment_taxi
+        description: "This is the link between the payment and taxi from the business vault"
+      - name: sat_b_payment
+        description: "This is the sat for the payment from the business vault"
