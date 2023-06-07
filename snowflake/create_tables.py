@@ -1,6 +1,5 @@
 import snowflake.connector as sf
 from snowflake.snowflake_config import execute_query
-
 import snowflake.connector
 
 
@@ -31,7 +30,7 @@ def create_tables(conn, table_names):
                     f'tollsAmount DOUBLE,'
                     f'ehailFee DOUBLE,'
                     f'totalAmount DOUBLE,'
-                    f'tripType INT);')
+                    f'totalAmount DOUBLE,);')
 
         cur.execute(f'CREATE TABLE IF NOT EXISTS zones_taxi ('
                     f'OBJECTID VARCHAR,'
